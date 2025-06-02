@@ -6,25 +6,29 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.OrderItem;
 
 public class Main {
     public static void main(String[] args) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("hello");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
 
         try {
-            Order order = entityManager.find(Order.class, 1L);
-            Member findMember = order.getMember();
+            Order order = new Order();
+            order.addOrderItem(new OrderItem());
 
-            transaction.commit();
+            OrderItem orderItem = new OrderItem();
+
+
+            tx.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            tx.rollback();
         } finally {
-            entityManager.close();
+            em.close();
         }
 
-        entityManagerFactory.close();
+        emf.close();
     }
 }
