@@ -23,8 +23,6 @@ public class Main {
 
             em.persist(book);
 
-
-
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
